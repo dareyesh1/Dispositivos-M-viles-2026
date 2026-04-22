@@ -6,14 +6,13 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF">
 
-    <!-- Fondo de onda (Opcional: Si tienes el recurso de imagen) -->
-    <!-- Para efectos prácticos, usaremos un color de fondo claro -->
+    <!-- Fondo -->
     <View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#FFFCF2" />
 
-    <!-- Iconos Superiores -->
+    <!-- Icono izquierdo -->
     <ImageView
         android:id="@+id/imgLogo"
         android:layout_width="40dp"
@@ -24,6 +23,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:tint="#333333" />
 
+    <!-- Icono derecho -->
     <ImageView
         android:layout_width="40dp"
         android:layout_height="40dp"
@@ -39,15 +39,15 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="40dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_top_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Login"
-            android:textColor="#000000"
-            android:textSize="45sp"
+            android:text="@string/title"
+            android:textColor="@color/login"
+            android:textSize="40sp"
             android:fontFamily="sans-serif-black"
             android:layout_marginBottom="40dp"/>
 
@@ -56,15 +56,16 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Email"
+            android:hint="@string/email"
             app:hintTextColor="#F7C14D"
             app:startIconDrawable="@android:drawable/ic_dialog_email"
-            app:startIconTint="#F7C14D"
+            app:startIconTint="@color/personalizado"
             android:background="@android:color/transparent"
             app:boxBackgroundColor="@android:color/transparent"
             app:boxStrokeColor="#F7C14D">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txtUserName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
@@ -77,10 +78,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:hint="Password"
+            android:hint="@string/password"
             app:hintTextColor="#F7C14D"
             app:startIconDrawable="@android:drawable/ic_lock_idle_lock"
-            app:startIconTint="#F7C14D"
+            app:startIconTint="@color/personalizado"
             app:endIconMode="password_toggle"
             app:endIconTint="#333333"
             android:background="@android:color/transparent"
@@ -88,13 +89,14 @@
             app:boxStrokeColor="#F7C14D">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txtUserPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
                 android:textColor="#F7C14D" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Fila de Remember me y Forgot -->
+        <!-- Remember + Forgot -->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -104,7 +106,7 @@
                 android:id="@+id/checkRemember"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Remember me"
+                android:text="@string/remember"
                 android:buttonTint="#F7C14D"
                 android:textSize="12sp"
                 android:textColor="#666666"/>
@@ -126,7 +128,7 @@
             android:layout_height="60dp"
             android:layout_marginTop="30dp"
             android:text="LOGIN"
-            android:textColor="#000000"
+            android:textColor="@color/login"
             android:textStyle="bold"
             android:textSize="18sp"
             app:backgroundTint="#F7C14D"
