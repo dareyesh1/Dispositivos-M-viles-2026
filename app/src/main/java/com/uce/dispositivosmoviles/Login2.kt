@@ -1,6 +1,7 @@
 package com.uce.dispositivosmoviles
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
@@ -60,7 +61,16 @@ class Login2 : AppCompatActivity() {
 
                 //Pasar a la otra actividad (Principal)
                 var intent =  Intent(this, Principal::class.java)
+                intent.putExtra("xx1", "Hola mundo")
                 startActivity(intent)
+
+
+                val gmmItentUri = Uri.parse("geo:-0.20036927477515057, -78.50104060774065")
+                val mapIntent = Intent(Intent.ACTION_VIEW)
+                mapIntent.setData(gmmItentUri)
+
+                mapIntent.setPackage("com.google.android.apps.maps")
+                startActivity(mapIntent)
 
             }else{
                 Toast.makeText(
