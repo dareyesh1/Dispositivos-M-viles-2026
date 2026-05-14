@@ -25,6 +25,11 @@
         android:layout_margin="8dp"
         android:layout_height="wrap_content"/>
 
+    <Spinner
+        android:id="@+id/androidSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"/>
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/urlBtn"
         android:layout_width="match_parent"
@@ -32,4 +37,13 @@
         android:layout_margin="8dp"
         android:text="Abrir URL"
         />
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/logoutBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="18dp"
+        android:backgroundTint="@color/red"
+        android:text="Cerrar Sesion"
+        />
+
 </LinearLayout>
