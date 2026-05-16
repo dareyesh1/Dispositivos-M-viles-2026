@@ -70,7 +70,7 @@ class Login2 : AppCompatActivity() {
                 mapIntent.setData(gmmItentUri)
 
                 mapIntent.setPackage("com.google.android.apps.maps")
-                startActivity(mapIntent)
+                //startActivity(mapIntent)
 
             }else{
                 Toast.makeText(

@@ -9,11 +9,14 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.snackbar.Snackbar
+import com.uce.dispositivosmoviles.adapters.CustomAdapter
 import com.uce.dispositivosmoviles.databinding.ActivityPrincipalBinding
+import com.uce.dispositivosmoviles.dto.Empresas
 
-class Principal : AppCompatActivity(), AdapterView.OnItemClickListener,
-AdapterView.OnItemSelectedListener{
+class Principal : AppCompatActivity(),
+    AdapterView.OnItemSelectedListener {
 
     private lateinit var binding: ActivityPrincipalBinding
 
@@ -27,43 +30,94 @@ AdapterView.OnItemSelectedListener{
         initVariables()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-    }
     private fun initVariables() {
-        intent.extras?.let {
-            val saludo = it.getString("xx1")
 
-            Snackbar.make(
-                binding.urlTxt,
-                saludo ?: "Bienvenido",
-                Snackbar.LENGTH_LONG
-            ).show()
+        // Mensaje recibido desde otra Activity
+        val saludo = intent.extras?.getString("xx1")
 
-            var options = listOf<String>("Youtube", "Google",
-                "Fcebook", "Apple")
-            var adapter = ArrayAdapter(this, R.layout.my_spinner_layout,
-                options)
+        Snackbar.make(
+            binding.urlTxt,
+            saludo ?: "Bienvenido",
+            Snackbar.LENGTH_LONG
+        ).show()
 
-            binding.androidSpinner.adapter = adapter
-        }
+        // OPCIONES DEL SPINNER
+        val options = listOf(
+            "Youtube",
+            "Google",
+            "Facebook",
+            "Apple"
+        )
+
+        val adapter = ArrayAdapter(
+            this,
+            R.layout.my_spinner_layout,
+            options
+        )
+
+        adapter.setDropDownViewResource(
+            android.R.layout.simple_spinner_dropdown_item
+        )
+
+        binding.androidSpinner.adapter = adapter
+        binding.androidSpinner.onItemSelectedListener = this
+
+        // DATOS DEL RECYCLERVIEW
+        val optionsEmpresas = listOf(
+            Empresas(
+                "Youtube",
+                "https://images.seeklogo.com/logo-png/27/1/youtube-icon-logo-png_seeklogo-270054.png"
+            ),
+            Empresas(
+                "Facebook",
+                "https://marketplace.canva.com/KrzKM/MAGzNqKrzKM/1/tl/canva-facebook-logo-MAGzNqKrzKM.png"
+            )
+        )
+
+        val adapterRecycleView = CustomAdapter(optionsEmpresas)
+
+        binding.RvUrls.adapter = adapterRecycleView
+
+        binding.RvUrls.layoutManager = GridLayoutManager(
+            this,
+            2
+        )
     }
 
     private fun initListeners() {
 
+        // BOTÓN PARA ABRIR URL
         binding.urlBtn.setOnClickListener {
 
             var url = binding.urlTxt.text.toString().trim()
 
-            // Agrega https:// si el usuario no lo escribió
-            if (!url.startsWith("http://") && !url.startsWith("https://")) {
+            if (url.isEmpty()) {
+
+                Toast.makeText(
+                    this,
+                    "Ingrese una URL",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+                return@setOnClickListener
+            }
+
+            // Agrega https:// si no existe
+            if (!url.startsWith("http://") &&
+                !url.startsWith("https://")
+            ) {
                 url = "https://$url"
             }
 
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+            val intent = Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse(url)
+            )
+
             startActivity(intent)
         }
 
+        // BOTÓN CERRAR SESIÓN
         binding.logoutBtn.setOnClickListener {
 
             AlertDialog.Builder(this)
@@ -72,7 +126,12 @@ AdapterView.OnItemSelectedListener{
                 .setCancelable(true)
 
                 .setPositiveButton("Sí") { _, _ ->
-                    val intent = Intent(this, Login2::class.java)
+
+                    val intent = Intent(
+                        this,
+                        Login2::class.java
+                    )
+
                     startActivity(intent)
                     finish()
                 }
@@ -89,27 +148,23 @@ AdapterView.OnItemSelectedListener{
         }
     }
 
-    override fun onItemClick(
+    override fun onItemSelected(
         parent: AdapterView<*>?,
         view: View?,
         position: Int,
         id: Long
     ) {
-        Toast.makeText(this, "Posicion seleccionada es ${position}",
-            Toast.LENGTH_LONG).show()
+
+        val item = parent?.getItemAtPosition(position).toString()
+
+        Toast.makeText(
+            this,
+            "Seleccionaste $item",
+            Toast.LENGTH_SHORT
+        ).show()
     }
 
-    override fun onItemSelected(
-        p0: AdapterView<*>?,
-        p1: View?,
-        p2: Int,
-        p3: Long
-    ) {
-        TODO("Not yet implemented")
+    override fun onNothingSelected(parent: AdapterView<*>?) {
+        // No hacer nada
     }
-
-    override fun onNothingSelected(p0: AdapterView<*>?) {
-        TODO("Not yet implemented")
-    }
-
 }
